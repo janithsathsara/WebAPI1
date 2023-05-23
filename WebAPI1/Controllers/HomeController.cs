@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI1.Controllers
 {
-
+    [Route("api/Home")]
     [ApiController]
     public class HomeController : Controller
     {
+        [HttpGet]
         public IEnumerable<Villa> GetVillas()
         {
             return new List<Villa>
