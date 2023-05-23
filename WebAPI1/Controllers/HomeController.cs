@@ -1,20 +1,36 @@
 ﻿using WebAPI1.Models;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI1.Models.Dto;
+using WebAPI1.Data;
 
 namespace WebAPI1.Controllers
 {
-    [Route("api/Home")]
+    [Route("api/[controller]")]
     [ApiController]
     public class HomeController : Controller
     {
         [HttpGet]
-        public IEnumerable<Villa> GetVillas()
+        public ActionResult <IEnumerable<VillaDTO>> GetVillas()
         {
-            return new List<Villa>
+            return Ok(VillaStore.villaList);
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        public ActionResult <VillaDTO> GetVilla(int id)
+        {
+            if (id == 0)
             {
-                new Villa{ Id= 1, Name="Villa 1"},
-                new Villa{ Id= 1, Name="Villa 2"},
-            };
-        } 
+                return BadRequest();
+            }
+            var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+            if (villa == null)
+            {
+                return NotFound();
+            }
+            return Ok(villa);
+        }
     }
 }
