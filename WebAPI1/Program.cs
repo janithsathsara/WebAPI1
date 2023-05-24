@@ -2,7 +2,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(
+    option=>
+    {
+        option.ReturnHttpNotAcceptable = true; // this will cause other types of requests to display error msgs such as xml instead of json
+    }
+    ).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters(); // supports xml format requests
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
