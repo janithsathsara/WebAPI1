@@ -17,12 +17,12 @@ namespace WebAPI1.Controllers
             _db = db;
         }
 
-        //        public ILogger<HomeController> _logger { get; }
+        //public ILogger<HomeController> _logger { get; }
         //
-        //        public HomeController(ILogger<HomeController> logger) // logs the state of anything we define inside the cmd window popup
-        //        {
-        //            _logger = logger;
-        //        }
+        //public HomeController(ILogger<HomeController> logger) // logs the state of anything we define inside the cmd window popup
+        //{
+        //    _logger = logger;
+        //}
         [HttpGet] // method for getting all the villas
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
@@ -55,10 +55,10 @@ namespace WebAPI1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDTO)
         {
-            //            if (!ModelState.IsValid) // in VillaDTO, the name field is Required. So, this gets triggered if name is ""
-            //            {
-            //                return BadRequest(ModelState);
-            //            }
+            //if (!ModelState.IsValid) // in VillaDTO, the name field is Required. So, this gets triggered if name is ""
+            //{
+            //    return BadRequest(ModelState);
+            //}
             if (_db.Villas.FirstOrDefault(u => u.Name.ToLower() == villaDTO.Name.ToLower()) != null)
             {
                 ModelState.AddModelError("Custom Error", "Villa already exists");//Custom error can be a number such as 400, but it should be something that doesn't exist
@@ -117,7 +117,6 @@ namespace WebAPI1.Controllers
             {
                 return BadRequest();
             }
-
             //var villa = _db.Villas.FirstOrDefault(u => u.Id == id);
             //villa.Name = villaDTO.Name;
             //villa.Sqft = villaDTO.Sqft;
@@ -175,7 +174,6 @@ namespace WebAPI1.Controllers
             };
             _db.Villas.Update(model);
             _db.SaveChanges();
-
 
             if(!ModelState.IsValid)
             {
